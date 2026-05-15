@@ -5,109 +5,147 @@ import ConverterCard from "./components/ConverterCard";
 import Navbar from "./components/Navbar";
 const units = {
 
-  Temperature: [
-    "Celsius",
-    "Fahrenheit"
-  ],
+    Temperature: [
+        "Celsius",
+        "Fahrenheit"
+    ],
 
-  Length: [
-    "Kilometers",
-    "Miles"
-  ]
+    Length: [
+        "Kilometers",
+        "Miles"
+    ],
+
+    Weight: [
+        "Kilograms",
+        "Pounds"
+    ],
+    Height: [
+        "Meters",
+        "Feet"
+    ]
+
+
+
 
 };
 
 function NewConverter() {
 
-  const [category, setCategory] = useState("Temperature");
+    const [category, setCategory] = useState("Temperature");
 
-  const [fromUnit, setFromUnit] = useState("Celsius");
+    const [fromUnit, setFromUnit] = useState("Celsius");
 
-  const [toUnit, setToUnit] = useState("Fahrenheit");
+    const [toUnit, setToUnit] = useState("Fahrenheit");
 
-  const [value, setValue] = useState("");
+    const [value, setValue] = useState("");
 
-  let result = "";
+    let result = "";
 
-  if (
-    fromUnit === "Celsius" &&
-    toUnit === "Fahrenheit"
-  ) {
+    if (
+        fromUnit === "Celsius" &&
+        toUnit === "Fahrenheit"
+    ) {
 
-    result = ((value * 9 / 5) + 32).toFixed(2);
+        result = ((value * 9 / 5) + 32).toFixed(2);
 
-  }
+    }
 
-  else if (
-    fromUnit === "Fahrenheit" &&
-    toUnit === "Celsius"
-  ) {
+    else if (
+        fromUnit === "Fahrenheit" &&
+        toUnit === "Celsius"
+    ) {
 
-    result = ((value - 32) * 5 / 9).toFixed(2);
+        result = ((value - 32) * 5 / 9).toFixed(2);
 
-  }
+    }
 
-  else if (
-    fromUnit === "Kilometers" &&
-    toUnit === "Miles"
-  ) {
+    else if (
+        fromUnit === "Kilometers" &&
+        toUnit === "Miles"
+    ) {
 
-    result = (value * 0.621371).toFixed(2);
+        result = (value * 0.621371).toFixed(2);
 
-  }
+    }
 
-  else if (
-    fromUnit === "Miles" &&
-    toUnit === "Kilometers"
-  ) {
+    else if (
+        fromUnit === "Miles" &&
+        toUnit === "Kilometers"
+    ) {
 
-    result = (value * 1.60934).toFixed(2);
+        result = (value * 1.60934).toFixed(2);
 
-  }
+    }
+    else if (
+        fromUnit === "Kilograms" &&
+        toUnit === "Pounds"
+    ) {
 
-  else {
+        result = (value * 2.20462).toFixed(2);
 
-    result = value;
+    }
+    else if (
+        fromUnit === "Pounds" &&
+        toUnit === "Kilograms"
+    ) {
 
-  }
+        result = (value / 2.20462).toFixed(2);
 
-  return (
+    }
 
-    <div className="min-h-screen bg-gradient-to-br from-green-100 via-white to-green-200">
+    else {
 
-      <Navbar />
+        result = value;
 
-      <div className="flex min-h-[calc(100vh-70px)]">
-        <Sidebar
-          units={units}
-          setCategory={setCategory}
-        />
+    }
 
-        <div className="flex-1 flex justify-center items-start pt-40">
-          <ConverterCard
-            category={category}
 
-            value={value}
-            setValue={setValue}
+    const handleCategoryChange = (newCategory) => {
 
-            fromUnit={fromUnit}
-            setFromUnit={setFromUnit}
+        setCategory(newCategory);
 
-            toUnit={toUnit}
-            setToUnit={setToUnit}
+        setFromUnit(units[newCategory][0]);
 
-            units={units}
+        setToUnit(units[newCategory][1]);
 
-            result={result}
-          />
+    };
+
+    return (
+
+        <div className="min-h-screen bg-gradient-to-br from-green-100 via-white to-green-200">
+
+            <Navbar />
+
+            <div className="flex min-h-[calc(100vh-70px)]">
+                <Sidebar
+                    units={units}
+                    setCategory={handleCategoryChange} />
+
+                <div className="flex-1 flex justify-center items-start pt-40">
+                    <ConverterCard
+                        category={category}
+
+                        value={value}
+                        setValue={setValue}
+
+                        fromUnit={fromUnit}
+                        setFromUnit={setFromUnit}
+
+                        toUnit={toUnit}
+                        setToUnit={setToUnit}
+
+                        units={units}
+
+                        result={result}
+                    />
+
+                </div>
+
+            </div>
 
         </div>
 
-      </div>
-
-    </div>
-
-  );
+    );
 }
 
 export default NewConverter;
